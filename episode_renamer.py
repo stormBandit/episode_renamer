@@ -73,8 +73,10 @@ def renameEpisodes(nameFormat, fileNames, directory):
         #check that the search resulted in a find
         if result: 
             for i in range(1,7):
-                if result.group(i):
-                    print str(i) +" = "+result.group(i) 
+                if not result.group(i):
+                    print "ERROR: a rogue file name was found, continuing would be dangerous"
+                    sys.exit()
+
             #rename the episode
             number = re.search("s(?P<season>[0-9]{2})e(?P<episode>[0-9]{2})", result.group("seasonEpisode"))
             print "season: " + str(number.group("season")) + " episode " + str(number.group("episode"))
