@@ -76,8 +76,6 @@ def renameEpisodes(nameFormat, fileNames, directory):
 
             #rename the episode
             number = re.search("s(?P<season>[0-9]{2})e(?P<episode>[0-9]{2})", result.group("seasonEpisode"))
-            print "season: " + str(number.group("season")) + " episode " + str(number.group("episode"))
-
             episodeNum = str(number.group("season")) + "." + str(number.group("episode"))
             #strip 0's from the front
             episodeNum = episodeNum.lstrip("0")
@@ -88,7 +86,9 @@ def renameEpisodes(nameFormat, fileNames, directory):
 
         else:
             print "The regex returned nothing!"
+            return -1
 
+    return 1
         
 
 #check for proper inputs
@@ -113,4 +113,8 @@ nameFormat = "0"
 
 #search the directory and see if a match for the regex is found, if not report the error
 result = renameEpisodes(nameFormat, sys.argv[1], sys.argv[2])
+if result == 1:
+    print "Success!"
+else:
+    print "Failure!"
 
