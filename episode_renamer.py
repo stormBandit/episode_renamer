@@ -63,9 +63,6 @@ def renameEpisodes(nameFormat, fileNames, directory):
     #load the names of the files from the nameFile
     episodeNames = parseEpisodeGuide(fileNames)
 
-    print episodeNames
-    raw_input("DONE")
-
     #for each episode in the folder, rename it with the corresponding one from the naming file
     for fileName in os.listdir(directory):
         #search for the episode
@@ -85,13 +82,7 @@ def renameEpisodes(nameFormat, fileNames, directory):
             #strip 0's from the front
             episodeNum = episodeNum.lstrip("0")
 
-            print "episodeNum = " + episodeNum
-
             newName = episodeNum + " " + episodeNames[episodeNum]
-
-            print "dir = " + directory
-            print "fileName = " + fileName
-            print "newName = " + newName
 
             os.rename(directory + fileName, directory + newName) 
 
