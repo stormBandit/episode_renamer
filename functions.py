@@ -89,32 +89,4 @@ def renameEpisodes(nameFormat, fileNames, directory):
             return -1
 
     return 1
-        
-
-#check for proper inputs
-if (len(sys.argv) != 3) :
-    print "You must pass in a names file for the renaming scheme and a path to the directory of file you want renamed"
-    print "Example:"
-    print "     ./episode_renamer [names-File] [/Path/To/Files}"    
-    sys.exit()
-if not os.path.exists(sys.argv[1]):
-    print "ERROR: names file does not exist"
-    sys.exit()
-if not  os.path.exists(sys.argv[2]):
-    print "ERROR: Path to files is not valid"
-    sys.exit()
-if os.listdir(sys.argv[2]) == []:
-    print "ERROR: The directory given is empty"
-    sys.exit()
-
-#get the nameing format for the files 
-nameFormat = "0"
-#nameFormat = getNameFormat(sys.argv[2])
-
-#search the directory and see if a match for the regex is found, if not report the error
-result = renameEpisodes(nameFormat, sys.argv[1], sys.argv[2])
-if result == 1:
-    print "Success!"
-else:
-    print "Failure!"
 
