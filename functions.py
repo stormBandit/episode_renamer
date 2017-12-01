@@ -17,24 +17,6 @@ def print_main_menu():
     # TODO ad rules as needed
 
 
-# check the formatting of the names file
-def check_name_file_formatting(name_file):
-    # read in the lines
-    episodes = open(name_file, "r")
-    names = episodes.readlines()
-
-    regexp = re.compile(r"[0-9]{1,2}[.][0-9]{1,2}[a-zA-Z0-9 ]+?")
-
-    for i in range(0, names.__sizeof__()):
-        line = names.__getitem__(i)
-        result = re.search(regexp, line)
-        if not result:
-            print("\n\nERROR in formatting of names file\nline number "+str(i)+": '"+line+"'\n\ndoes not match the proper formatting")
-            return False
-
-    return True
-
-
 # this is the regex help menu for users building a regex
 def printRegexHelpMenu():
     print("MUST DEFINE THIS AT A LATER TIME")

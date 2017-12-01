@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+import re
 
 
 class UserInput:
@@ -15,10 +16,45 @@ class UserInput:
     def has_path_to_files(self):
         return True if self.pathToFiles != "" else False
 
-    def get_user_input(self, input_desired):
+    # check the formatting of the names file
+    def check_name_file_formatting(self, name_file):
+        # read in the lines
+        episodes = open(name_file, "r")
+        names = episodes.readlines()
+
+        regexp = re.compile(r"[0-9]{1,2}[.][0-9]{1,2}[a-zA-Z0-9 ]+?")
+
+        for i in range(0, names.__sizeof__()):
+            line = names.__getitem__(i)
+            result = re.search(regexp, line)
+            if not result:
+                print("\n\nERROR in formatting of names file\nline number " + str(
+                    i) + ": '" + line + "'\ndoes not match the proper formatting\n")
+                return False
+
+        return True
+
+    # TODO replace with a file picker eventually
+    def get_name_file(self):
 
         while True:
-            print(input_desired)
+            print("Please enter the file that describes the names for the episodes that you want renamed")
+            inputted_value = input()
+            print("inputtedValue: " + inputted_value)
+            if not os.path.isfile(inputted_value):
+                print("ERROR: The file does not exist. Please try again\n")
+            else:
+                if os.path.getsize(inputted_value) > 0:
+                    if self.check_name_file_formatting(inputted_value):
+                        return inputted_value
+                else:
+                    print("ERROR: File is empty, please try again\n")
+
+    # TODO replace with a file picker eventually
+    def get_path_to_files(self):
+
+        while True:
+            print("Please input the directory containing the episodes you want renamed")
             inputted_value = input()
             print("inputtedValue: " + inputted_value)
             if not os.path.exists(inputted_value):
@@ -27,4 +63,6 @@ class UserInput:
                 if os.path.getsize(inputted_value) > 0:
                     return inputted_value
                 else:
-                    print("ERROR: File or Directory inputted was empty, please try again\n")
+                    print("ERROR: Directory is empty, please try again\n")
+
+

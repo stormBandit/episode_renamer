@@ -11,13 +11,9 @@ functions.print_main_menu()
 # prompt the user for input
 # TODO this will be replaced by a file picker
 userInput = UserInput()
-userInput.nameFile = userInput.get_user_input("Please enter the file that describes the names for the episodes that you"
-                                              " want renamed")
-print("testing format: "+str(functions.check_name_file_formatting(userInput.nameFile)))
+userInput.nameFile = userInput.get_name_file()
 
-userInput.pathToFiles = userInput.get_user_input("Please input the directory containing the episodes you want renamed")
-
-print("Check: \nhasNameFile: "+str(userInput.has_name_file())+"\nhasPathToFiles: "+str(userInput.has_path_to_files()))
+userInput.pathToFiles = userInput.get_path_to_files()
 
 # check the formatting for file names and path to the episodes
 #functions.check_name_file_formatting(userInput.nameFile)
