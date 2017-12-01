@@ -1,11 +1,43 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import sys
 import os
 import re
 
-#this is the regex help menu for users building a regex
+
+# Print main menu for introduction to the program
+def print_main_menu():
+    print("\n\nWelcome to the episode renamer")
+    print("a program used to rename those pesky episodes with weird names like 'Friends-S01E01.alan.1080p.HD.mkv'")
+    print("\nThis program will accept a file describing the name of the episodes, and a folder holding the episodes you"
+          " want renamed")
+    print("\nIMPORTANT: the file holding the episode names needs to be formatted correctly, following these rules:")
+    print("     1. Each episode name need to be on a new line")
+    print("     2. The lines must prefix with #.## format indicating what season and episode the name corresponds with"
+          "         ex. 1.01 -> season 1, episode 1")
+    # TODO ad rules as needed
+
+
+# check the formatting of the names file
+def check_name_file_formatting(name_file):
+    # read in the lines
+    episodes = open(name_file, "r")
+    names = episodes.readlines()
+
+    regexp = re.compile(r"[0-9]{1,2}[.][0-9]{1,2}[a-zA-Z0-9 ]+?")
+
+    for i in range(0, names.__sizeof__()):
+        line = names.__getitem__(i)
+        result = re.search(regexp, line)
+        if not result:
+            print("\n\nERROR in formatting of names file\nline number "+str(i)+": '"+line+"'\n\ndoes not match the proper formatting")
+            return False
+
+    return True
+
+
+# this is the regex help menu for users building a regex
 def printRegexHelpMenu():
-    print "MUST DEFINE THIS AT A LATER TIME"
+    print("MUST DEFINE THIS AT A LATER TIME")
 
 
 #this function, is used to rettrive the regex used for the file names
@@ -13,7 +45,7 @@ def getNameFormat(pathToFile):
     regexAccepted = False
 
     while (regexAccepted == False):
-        userRegex = raw_input("\nPlease enter the regex to describe how the files are named (type \"help\" for a regex guide):\n")
+        userRegex = input("\nPlease enter the regex to describe how the files are named (type \"help\" for a regex guide):\n")
 
         if userRegex.lower() == "help":
             printRegexHelpMenu()
@@ -42,13 +74,13 @@ def parseEpisodeGuide(fileNames):
         name.strip("\n")
 
         if not name:
-            print "NULL"
+            print("NULL")
         
         if regexp.search(name):
             result = re.search("(?P<number>[0-9.]*) (?P<title>[a-zA-Z ',]*) *(?P<airDate>[0-9/]*)", name) 
             for i in range(1,3):
                 if not result.group(i):
-                    print "ERROR: failed to read title name" 
+                    print("ERROR: failed to read title name" )
                     sys.exit()
 
             #append the new key/value to the dict
@@ -71,7 +103,7 @@ def renameEpisodes(nameFormat, fileNames, directory):
         if result: 
             for i in range(1,7):
                 if not result.group(i):
-                    print "ERROR: a rogue file name was found, continuing would be dangerous"
+                    print("ERROR: a rogue file name was found, continuing would be dangerous")
                     sys.exit()
 
             #rename the episode
@@ -85,7 +117,7 @@ def renameEpisodes(nameFormat, fileNames, directory):
             os.rename(directory + fileName, directory + newName) 
 
         else:
-            print "The regex returned nothing!"
+            print("The regex returned nothing!")
             return -1
 
     return 1

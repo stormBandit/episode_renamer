@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import sys
 import os
 
 
@@ -29,14 +28,3 @@ class UserInput:
                     return inputted_value
                 else:
                     print("ERROR: File or Directory inputted was empty, please try again\n")
-
-
-# prompt the user for input
-# TODO this will be replaced by a file picker
-
-userInput = UserInput()
-userInput.nameFile = userInput.get_user_input("Please enter the file that describes the names for the episodes that you"
-                                              " want renamed")
-userInput.pathToFiles = userInput.get_user_input("Please input the directory containing the episodes you want renamed")
-
-print("Check: \nhasNameFile: "+str(userInput.has_name_file())+"\nhasPathToFiles: "+str(userInput.has_path_to_files()))
