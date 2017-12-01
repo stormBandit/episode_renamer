@@ -1,55 +1,42 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import sys
 import os
 
+
 class UserInput:
-    'Input class for defining methods to work on getting inputs easily from the user'
+    """Input class for defining methods to work on getting inputs easily from the user"""
 
     def __init__(self):
-        self.nameFile = "" #this is a txt that holds the desired names of the files wanted to rename
-        self.pathToFiles = "" #this is a path to the directory of files we want to rename
-        self.hasNameFile = False
-        self.hasPathToFiles = False
+        self.nameFile = ""      # this is a txt that holds the desired names of the files wanted to rename
+        self.pathToFiles = ""   # this is a path to the directory of files we want to rename
 
-    def hasNameFile(self):
-        return self.hasNameFile
+    def has_name_file(self):
+        return True if self.nameFile != "" else False
 
-    def hasPathToFiles(self):
-        return self.hasPathToFiles
+    def has_path_to_files(self):
+        return True if self.pathToFiles != "" else False
 
-    def getUserInput(self, inputDesired):
-        success = False
+    def get_user_input(self, input_desired):
 
-        while success is not True:
-            print inputDesired
-            inputtedValue = raw_input()
-            print "inputtedValue: " + inputtedValue
-            if not os.path.exists(inputtedValue):
-                print "ERROR: Path to files could not be found. Please try again\n"
+        while True:
+            print(input_desired)
+            inputted_value = input()
+            print("inputtedValue: " + inputted_value)
+            if not os.path.exists(inputted_value):
+                print("ERROR: Path to files could not be found. Please try again\n")
             else:
-                success = True
-                break
+                if os.path.getsize(inputted_value) > 0:
+                    return inputted_value
+                else:
+                    print("ERROR: File or Directory inputted was empty, please try again\n")
 
-        return inputtedValue
-            
-    
 
-"""prompt the user for input"""
+# prompt the user for input
+# TODO this will be replaced by a file picker
+
 userInput = UserInput()
-self.nameFile = userInput.getUserInput("Please enter the file that describes the names for the files you want renamed")
+userInput.nameFile = userInput.get_user_input("Please enter the file that describes the names for the episodes that you"
+                                              " want renamed")
+userInput.pathToFiles = userInput.get_user_input("Please input the directory containing the episodes you want renamed")
 
-if (len(sys.argv) != 3) :
-    print "You must pass in a names file for the renaming scheme and a path to the directory of file you want renamed"
-    print "Example:"
-    print "     ./episode_renamer [names-File] [/Path/To/Files}"    
-    sys.exit()
-if not os.path.exists(sys.argv[1]):
-    print "ERROR: names file does not exist"
-    sys.exit()
-if not  os.path.exists(sys.argv[2]):
-    print "ERROR: Path to files is not valid"
-    sys.exit()
-if os.listdir(sys.argv[2]) == []:
-    print "ERROR: The directory given is empty"
-    sys.exit()
-
+print("Check: \nhasNameFile: "+str(userInput.has_name_file())+"\nhasPathToFiles: "+str(userInput.has_path_to_files()))
