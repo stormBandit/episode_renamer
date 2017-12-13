@@ -13,7 +13,7 @@ def print_main_menu():
     print("\nIMPORTANT: the file holding the episode names needs to be formatted correctly, following these rules:")
     print("     1. Each episode name need to be on a new line")
     print("     2. The lines must prefix with #.## format indicating what season and episode the name corresponds with"
-          "         ex. 1.01 -> season 1, episode 1")
+          "         ex. 1.01 -> season 1, episode 1\n\n")
     # TODO ad rules as needed
 
 

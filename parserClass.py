@@ -32,7 +32,7 @@ class Parser:
                     num_matches += 1
                 else:
                     print("Found a file that does not conform to the pattern: " + fileName)
-                    print("Is is safe to ignore this file when renaming ? [Y n]")
+                    print("Is is safe to ignore this file when renaming ? [y n]")
                     choice = input()
                     if choice.lower().strip() == "y":
                         self.ignore_list.append(fileName)
@@ -67,7 +67,7 @@ class Parser:
             elif file_type == result.group(0) or self.ignore_list.__contains__(fileName):
                 continue
             else:
-                print("There is a file that has a different extension then all the others" + fileName)
+                print("There is a file that has a different extension then all the others " + fileName)
                 # TODO lets make this not a fatal error
                 return None
 
