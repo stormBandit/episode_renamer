@@ -62,3 +62,21 @@ class UserInput:
                     return inputted_value
                 else:
                     print("ERROR: Directory is empty, please try again\n")
+
+    # get the user's preference on naming scheme
+    def get_nameing_scheme(self):
+        choice = ""
+
+        while choice not in ["1", "2", "3", "4"]:
+            print("Please choose one of the following naming schemes for your list of episodes:")
+            print("(1): Show Name S#.E# Episode Title")
+            print("     ex: Friends S01.E01 Pilot\n")
+            print("(2): S#.E# Episode Title")
+            print("     ex: S01.E01 Pilot\n")
+            print("(3): Show Name # X # Episode Title")
+            print("     ex: Friends 01 X 01 Pilot\n")
+            print("(4): # X # Episode Title")
+            print("     ex: 01 X 01 Pilot\n")
+            choice = input()
+
+        return choice
