@@ -21,24 +21,6 @@ def print_main_menu():
 def printRegexHelpMenu():
     print("MUST DEFINE THIS AT A LATER TIME")
 
-
-#this function, is used to rettrive the regex used for the file names
-def getNameFormat(pathToFile):
-    regexAccepted = False
-
-    while (regexAccepted == False):
-        userRegex = input("\nPlease enter the regex to describe how the files are named (type \"help\" for a regex guide):\n")
-
-        if userRegex.lower() == "help":
-            printRegexHelpMenu()
-            continue
-
-        try:
-            re.compile(userRegex)
-            regexAccepted = True
-        except re.error:
-            regexAccepted = False          
-
 #this funciton is used to parse the inputted episode guide / file names text
 def parseEpisodeGuide(fileNames):
     #read in the lines
@@ -46,10 +28,8 @@ def parseEpisodeGuide(fileNames):
     names = episodes.readlines()
     namesDictionary = {};
 
-
     #build the regex to check episode names
     regexp = re.compile(r"[0-9.]+?[a-zA-Z0-9 ]+?")
-
 
     #edit the lines to strip away all other text but the name of the episode
     for name in names:
@@ -70,7 +50,9 @@ def parseEpisodeGuide(fileNames):
 
     return namesDictionary
 
-#this function searches the given directory for files matching the regex given and replaces the file names with the names given in the name file 
+
+# this function searches the given directory for files matching the regex given and replaces the file names with the
+# names given in the name file
 def renameEpisodes(nameFormat, fileNames, directory):
     pattern = re.compile(r"(?P<title>[a-zA-Z0-9 ]*).(?P<seasonEpisode>[a-zA-Z0-9 ]*).(?P<videoType>[0-9]+?p).(?P<junk>[a-zA-Z0-9 ]*).(?P<junk2>[a-zA-Z0-9 -]*).(?P<fileType>[a-zA-Z]*)")
 
