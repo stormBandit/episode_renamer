@@ -32,15 +32,24 @@ class Parser:
             for fileName in os.listdir(episode_folder):
                 if re.search(pattern, fileName):
                     num_matches += 1
-                    if num_matches == num_files:
-                        print("Pattern '" + pattern + "' matches all files in directory")
-                        return pattern
                 else:
                     print("Found a file that does not conform to the pattern: " + fileName)
                     print("Is is safe to ignore this file when renaming ? [Y n]")
                     choice = input()
                     if choice.lower().strip() == "y":
                         self.ignore_list.append(fileName)
+                    else:
+                        print("File will not be ignored, continuing search for proper pattern")
+                        continue
+
+                print("numMatches " + str(num_matches))
+                print("len(ignoreList) " + str(self.ignore_list.__len__()))
+                if num_matches == (num_files - len(self.ignore_list)):
+                    print("Pattern '" + pattern + "' matches all files in directory")
+                    return pattern
+
+        # TODO dont just give up like this...
+        print("Unable to find a pattern that suits all files... sorry")
 
     # TODO want to make this process automatic
     def get_delimiter_from_user(self):
