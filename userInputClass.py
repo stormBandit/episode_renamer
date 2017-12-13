@@ -65,6 +65,11 @@ class UserInput:
 
     # get the user's preference on naming scheme
     def get_nameing_scheme(self):
+
+        choices = {'1': "Show Name S#.E# Episode Title",
+                   '2': "S#.E# Episode Title",
+                   '3': "Show Name # X # Episode Title",
+                   '4': "# X # Episode Title"}
         choice = ""
 
         while choice not in ["1", "2", "3", "4"]:
@@ -79,4 +84,15 @@ class UserInput:
             print("     ex: 01 X 01 Pilot\n")
             choice = input()
 
-        return choice
+        return choices.get(choice)
+
+    # get the name of the show as input from the user... this is hard to parse and may not even be in the file name
+    def get_show_name_from_user(self):
+        name = ""
+        confirmation = "n"
+
+        while confirmation.lower().strip() != "y":
+            name = input("Please enter the name of the show: ")
+
+            print("\nYou have input the name of the show as '" + name + "' is this correct? [y n]")
+            confirmation = input("Please double check spelling and capitalization as the name is hard to change later\n")
