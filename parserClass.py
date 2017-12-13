@@ -12,6 +12,8 @@ class Parser:
         'S[0-9]{1,2}.*E[0-9]{1,3}'
     ]
 
+    fileTypePattern = "\.[a-zA-z]{1,}$"
+
     def __init__(self):
         self.ignore_list = list()
         self.episode_guide_file = ""
@@ -22,12 +24,8 @@ class Parser:
     # TODO make this more robust, in a more systematic way not so brute force
     # TODO wrap this stuff in try-catch blocks for safety
     def find_pattern(self, episode_folder):
-
         num_files = len(os.listdir(episode_folder))
-
-        print("number of files = " + str(num_files))
         num_matches = 0
-
         for pattern in self.patterns:
             for fileName in os.listdir(episode_folder):
                 if re.search(pattern, fileName):
@@ -42,14 +40,46 @@ class Parser:
                         print("File will not be ignored, continuing search for proper pattern")
                         continue
 
-                print("numMatches " + str(num_matches))
-                print("len(ignoreList) " + str(self.ignore_list.__len__()))
                 if num_matches == (num_files - len(self.ignore_list)):
                     print("Pattern '" + pattern + "' matches all files in directory")
                     return pattern
 
-        # TODO dont just give up like this...
+        # TODO don't just give up like this...
         print("Unable to find a pattern that suits all files... sorry")
+
+    # TODO what if not all the files are the same filetype???
+    # grab the file type for the episodes
+    def find_file_type(self, episode_folder):
+        regex = re.compile(self.fileTypePattern)
+
+        file_type = ""
+
+        for fileName in os.listdir(episode_folder):
+            print(fileName)
+            result = regex.search(fileName)
+            if not result:
+                print("A file caused the regex to fail: " + fileName)
+                # TODO lets make this not a fatal error
+                return None
+
+            if file_type == "":
+                file_type = result.group(0)
+            elif file_type == result.group(0) or self.ignore_list.__contains__(fileName):
+                continue
+            else:
+                print("There is a file that has a different extension then all the others" + fileName)
+                # TODO lets make this not a fatal error
+                return None
+
+        return file_type
+
+
+
+    def parse_episode_names(self, episode_name_file):
+        file = open(episode_name_file, "r")
+        episode_names = file.readlines()
+        for name in episode_names:
+            print(name)
 
     # TODO want to make this process automatic
     def get_delimiter_from_user(self):
