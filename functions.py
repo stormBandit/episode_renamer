@@ -16,11 +16,6 @@ def print_main_menu():
           "         ex. 1.01 -> season 1, episode 1\n\n")
     # TODO ad rules as needed
 
-
-# this is the regex help menu for users building a regex
-def printRegexHelpMenu():
-    print("MUST DEFINE THIS AT A LATER TIME")
-
 #this funciton is used to parse the inputted episode guide / file names text
 def parseEpisodeGuide(fileNames):
     #read in the lines
