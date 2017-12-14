@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import sys
 import re
 import os
 
@@ -9,7 +8,7 @@ class Parser:
 
     # hardcoded patterns list to search for
     patterns = [
-        'S[0-9]{1,2}.*E[0-9]{1,3}'
+        '(?P<Season>S[0-9]{1,2}).*(?P<Episode>E[0-9]{1,3})'     # 'S[0-9]{1,2}.*E[0-9]{1,3}'
     ]
 
     fileTypePattern = "\.[a-zA-z]{1,}$"
@@ -47,7 +46,7 @@ class Parser:
         # TODO don't just give up like this...
         print("Unable to find a pattern that suits all files... sorry")
 
-    # TODO what if not all the files are the same filetype???
+    # TODO what if not all the files are the same file type???
     # grab the file type for the episodes
     def find_file_type(self, episode_folder):
         regex = re.compile(self.fileTypePattern)
@@ -72,8 +71,6 @@ class Parser:
                 return None
 
         return file_type
-
-
 
     def parse_episode_names(self, episode_name_file):
         file = open(episode_name_file, "r")
