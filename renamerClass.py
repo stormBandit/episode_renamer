@@ -12,7 +12,48 @@ class Renamer:
         self.show_name = ""     # the name of the tv show being renamed
         self.file_type = ""     # the file type for the episode video files
 
-    def renameEpisodes(self, userInput, parser):
+    def create_new_name(self, new_names, season_number, episode_number):
+        new_name = ""
+        pattern = season_number.strip("0") + "\." + episode_number
+
+        print("pattern: " + pattern)
+
+        for name in new_names:
+            # found the right name for this episode, rename the episode
+            if re.search(pattern, name):
+                new_name = self.name_scheme
+                episode_name = name.split(None, 1)
+
+                print("episodeName: " + episode_name)
+
+                # replace with the show name
+                if self.name_scheme.__contains__("Show Name"):
+                    re.sub('Show Name', self.show_name, new_name)
+
+                    print("1. new_name: " + new_name)
+
+                # replace the S#.E#
+                if self.name_scheme.__contains__("S#.E#"):
+                    re.sub('S#', season_number, new_name)
+                    re.sub('E#', episode_number, new_name)
+
+                    print("2. new_name: " + new_name)
+
+                # replace the S# X E#
+                if self.name_scheme.__contains__("S# X E#"):
+                    re.sub('S#', season_number, new_name)
+                    re.sub('E#', episode_number, new_name)
+
+                    print("3. new_name: " + new_name)
+
+                #replace the 'Episde Title'
+                re.sub('Episode Title', episode_name, new_name)
+
+
+
+        return new_name
+
+    def rename_episodes(self, userInput, parser):
         # get the names in a list
         file = open(userInput.nameFile, "r")
         new_names = file.readlines()
@@ -37,3 +78,5 @@ class Renamer:
             print("Episode: " + str(episode_number))
 
             print(self.name_scheme)
+
+            new_name = self.create_new_name(new_names, season_number, episode_number)

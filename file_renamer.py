@@ -37,4 +37,4 @@ renamer.name_scheme = userInput.get_nameing_scheme()
 # get the name of the show
 renamer.show_name = userInput.get_show_name_from_user()
 
-renamer.renameEpisodes(userInput, parser)
+renamer.rename_episodes(userInput, parser)
